@@ -4,7 +4,7 @@ require "rails_helper"
 RSpec.describe "Customers", type: :request do
   describe "GET /customers/:id" do
     it "returns the customer" do
-      customer = Customer.create(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
+      customer = Customer.create!(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
 
       get api_v1_customer_path(customer)
 
