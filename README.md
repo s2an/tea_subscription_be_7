@@ -1,24 +1,36 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Take-Home Back End Prompt
+Tea Subscription Service
+You will create a Rails API for a Tea Subscription Service.
 
-Things you may want to cover:
+Requirements:
+At a minimum, you must create:
 
-* Ruby version
+An endpoint to subscribe a customer to a tea subscription
+An endpoint to cancel a customer’s tea subscription
+An endpoint to see all of a customer’s subsciptions (active and cancelled)
+Beyond the base requirements, include any additional endpoints you’d like, but be mindful of your time. You don’t need to go overboard, consider what might be necessary to achieve MVP so that this API is easy to understand and consume by a Frontend Developer.
 
-* System dependencies
+Data Details
 
-* Configuration
+Tea
 
-* Database creation
+Title
+Description
+Temperature
+Brew Time
 
-* Database initialization
+Customer
 
-* How to run the test suite
+First Name
+Last Name
+Email
+Address
 
-* Services (job queues, cache servers, search engines, etc.)
+Subscription
 
-* Deployment instructions
-
-* ...
+Title
+Price
+Status
+Frequency
