@@ -1,9 +1,9 @@
 # spec/requests/subscriptions_spec.rb
 require "rails_helper"
 
-RSpec.describe "subscriptions", type: :request do
-  describe "GET /subscriptions/:id" do
-    it "returns the subscription" do
+RSpec.describe "Subscriptions", type: :request do
+  describe "GET /customers/:customer_id/subscriptions/:id" do
+    it "returns all of the customer's subscriptions" do
       customer = Customer.create!(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
       tea = Tea.create!(title: "Green Tea", description: "Green tea lighter than Black Tea.", temperature: 180, brew_time: 5)
       subscription = Subscription.create!(title: "The Green Box", price: 9.99, status: "active", frequency: "monthly", customer: customer, tea: tea)
