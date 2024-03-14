@@ -11,7 +11,7 @@ A Rails API for a Tea Subscription Service.
 ## Installation / Running the App
 
 1. Clone the repository
-`git clone https://github.com/s2an/tea_subscription_be_7.git`
+`git clone git@github.com:s2an/tea_subscription_be_7.git`
 
 1. Navigate to the project directory
 `cd tea_subscription_be_7`
