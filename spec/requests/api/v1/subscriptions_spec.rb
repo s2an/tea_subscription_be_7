@@ -11,7 +11,6 @@ RSpec.describe "Subscriptions", type: :request do
       get api_v1_customer_subscriptions_path(customer)
       
       expect(response).to have_http_status(:success)
-      expect
       expect(response.body).to include(subscription.title)
       expect(response.body).to include(subscription.price.to_s)
       expect(response.body).to include(subscription.status)
