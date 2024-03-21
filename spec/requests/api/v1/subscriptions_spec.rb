@@ -24,7 +24,7 @@ RSpec.describe "Subscriptions", type: :request do
       subscription_params = { subscription: { title: "The Green Box", price: 9.99, status: "active", frequency: "monthly" } }
 
       post api_v1_customer_subscriptions_path(customer), params: subscription_params
-
+# require "pry"; binding.pry
       expect(response).to have_http_status(:created)
       expect(customer.subscriptions.count).to eq(1)
 
