@@ -6,10 +6,9 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def create
-    # require "pry"; binding.pry
     customer = Customer.find(params[:customer_id])
     tea = Tea.find(subscription_params[:tea_id])
-    subscription = customer.subscriptions.create(subscription_params)
+    subscription = customer.subscriptions.create!(subscription_params)
     subscription.tea = tea
     
     if subscription.save

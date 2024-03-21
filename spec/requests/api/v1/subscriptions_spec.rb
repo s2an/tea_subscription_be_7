@@ -20,12 +20,12 @@ RSpec.describe "Subscriptions", type: :request do
 
   describe "POST /customers/:customer_id/subscriptions" do
     it "HAPPY PATH: creates a new subscription for the customer" do
-      tea = Tea.create!(title: "Green Tea", description: "Green tea lighter than Black Tea.", temperature: 180, brew_time: 5)
+      tea = Tea.create!(title: "Green Tea", description: "Green tea is lighter than Black Tea.", temperature: 180, brew_time: 5)
       customer = Customer.create!(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
       subscription_params = { subscription: { title: "The Green Box", price: 9.99, status: "active", frequency: "monthly", tea_id: tea.id } }
 
       post api_v1_customer_subscriptions_path(customer), params: subscription_params
-# require "pry"; binding.pry
+
       expect(response).to have_http_status(:created)
       expect(customer.subscriptions.count).to eq(1)
 
@@ -36,8 +36,9 @@ RSpec.describe "Subscriptions", type: :request do
     end
 
     it "SAD PATH: does not create a new subscription with incomplete params" do
+      tea = Tea.create!(title: "Green Tea", description: "Green tea is lighter than Black Tea.", temperature: 180, brew_time: 5)
       customer = Customer.create!(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
-      incomplete_subscription_params = { subscription: { title: "The Green Box", price: 9.99 } }
+      incomplete_subscription_params = { subscription: { title: "The Green Box", price: 9.99, tea_id: tea.id } }
 
       post api_v1_customer_subscriptions_path(customer), params: incomplete_subscription_params
 
