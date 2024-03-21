@@ -6,8 +6,11 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
 
   def create
+    # require "pry"; binding.pry
     customer = Customer.find(params[:customer_id])
+    tea = Tea.find(subscription_params[:tea_id])
     subscription = customer.subscriptions.create(subscription_params)
+    subscription.tea = tea
     
     if subscription.save
       render json: subscription, status: :created
@@ -19,7 +22,7 @@ class Api::V1::SubscriptionsController < ApplicationController
   private
 
   def subscription_params
-    params.require(:subscription).permit(:title, :price, :status, :frequency)
+    params.require(:subscription).permit(:title, :price, :status, :frequency, :tea_id)
   end
 
 end
