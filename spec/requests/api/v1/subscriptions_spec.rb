@@ -60,7 +60,6 @@ RSpec.describe "Subscriptions", type: :request do
       expect(Subscription.count).to eq(1)
   
       delete api_v1_customer_subscription_path(customer, subscription)
-  
       expect(response).to be_successful
       expect(Subscription.count).to eq(0)
       expect{ Subscription.find(subscription.id) }.to raise_error(ActiveRecord::RecordNotFound)

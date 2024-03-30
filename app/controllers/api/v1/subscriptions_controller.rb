@@ -18,6 +18,12 @@ class Api::V1::SubscriptionsController < ApplicationController
     end
   end
 
+  def destroy
+    customer = Customer.find(params[:customer_id])
+    subscription = Subscription.find(params[:id])
+    subscription.destroy!
+  end
+
   private
 
   def subscription_params
