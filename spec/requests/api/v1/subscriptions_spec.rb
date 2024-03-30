@@ -65,4 +65,39 @@ RSpec.describe "Subscriptions", type: :request do
       expect{ Subscription.find(subscription.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
+
+    describe "DELETE /customers/:customer_id/subscriptions/:id" do
+      it "SAD PATH: does NOT delete a subscription from the customer if the subscription id is not associated" do
+        tea = Tea.create!(title: "Green Tea", description: "Green tea is lighter than Black Tea.", temperature: 180, brew_time: 5)
+        customer = Customer.create!(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
+        subscription_params = { subscription: { title: "The Green Box", price: 9.99, status: "active", frequency: "monthly", tea_id: tea.id } }
+  
+        post api_v1_customer_subscriptions_path(customer), params: subscription_params
+  
+        subscription = Subscription.last
+        
+        expect(Subscription.count).to eq(1)
+
+        delete api_v1_customer_subscription_path(customer, id: subscription.id + 1)
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "SAD PATH: does NOT delete a subscription from the customer if the customer is not associated" do
+        tea = Tea.create!(title: "Green Tea", description: "Green tea is lighter than Black Tea.", temperature: 180, brew_time: 5)
+        customer = Customer.create!(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
+        subscription_params = { subscription: { title: "The Green Box", price: 9.99, status: "active", frequency: "monthly", tea_id: tea.id } }
+  
+        post api_v1_customer_subscriptions_path(customer), params: subscription_params
+  
+        subscription = Subscription.last
+        
+        expect(Subscription.count).to eq(1)
+
+        wrong_customer = Customer.last.id + 1
+        delete api_v1_customer_subscription_path(customer_id: wrong_customer, id: subscription)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
 end
