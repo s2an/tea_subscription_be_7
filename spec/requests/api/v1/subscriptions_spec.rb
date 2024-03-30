@@ -46,4 +46,24 @@ RSpec.describe "Subscriptions", type: :request do
       expect(customer.subscriptions.count).to eq(0)
     end
   end
+
+  describe "DELETE /customers/:customer_id/subscriptions/:id" do
+    it "HAPPY PATH: deletes a subscription from the customer" do
+      tea = Tea.create!(title: "Green Tea", description: "Green tea is lighter than Black Tea.", temperature: 180, brew_time: 5)
+      customer = Customer.create!(first_name: "Jane", last_name: "Doe", email: "jane.doe@anyominous.com", address: "123 Main St")
+      subscription_params = { subscription: { title: "The Green Box", price: 9.99, status: "active", frequency: "monthly", tea_id: tea.id } }
+
+      post api_v1_customer_subscriptions_path(customer), params: subscription_params
+
+      subscription = Subscription.last
+      
+      expect(Subscription.count).to eq(1)
+  
+      delete api_v1_customer_subscription_path(customer, subscription)
+  
+      expect(response).to be_successful
+      expect(Subscription.count).to eq(0)
+      expect{ Subscription.find(subscription.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
 end
