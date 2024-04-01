@@ -18,6 +18,16 @@ class Api::V1::SubscriptionsController < ApplicationController
     end
   end
 
+  def update
+    subscription = Subscription.find(params[:id])
+    if params[:subscription][:status] == "cancelled"
+      subscription.update(status: "cancelled")
+      render json: subscription, status: :ok
+    else
+      render json: subscription.errors, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     customer = Customer.find(params[:customer_id])
     subscription = Subscription.find(params[:id])
