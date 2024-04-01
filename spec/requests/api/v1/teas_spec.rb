@@ -15,4 +15,19 @@ RSpec.describe "Teas", type: :request do
       expect(response.body).to include(tea.brew_time.to_s)
     end
   end
+
+  describe "POST /teas" do
+    it "HAPPY PATH: creates a new tea" do
+      tea_params = { tea: { title: "Green Tea", description: "Green tea is lighter than Black Tea", temperature: 180, brew_time: 5 } }
+
+      post api_v1_teas_path, params: tea_params
+
+      expect(response).to have_http_status(:created)
+      expect(Tea.count).to eq(1)
+      expect(response.body).to include("Green Tea")
+      expect(response.body).to include("Green tea is lighter than Black Tea")
+      expect(response.body).to include("180")
+      expect(response.body).to include("5")
+    end
+  end
 end
